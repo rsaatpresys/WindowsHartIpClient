@@ -124,6 +124,11 @@ namespace FieldCommGroup.HartIPConnect
       public const int IO_SOCKET_TIMEOUT = 32;  // ms
 
       /// <summary>
+      /// IO Socket timeout used for the IO device that is connected via IP while runnig debugging to use breakpoints 
+      /// </summary>
+      public const int IO_SOCKET_TIMEOUT_DEBUGGER = 1000000;  // ms
+
+      /// <summary>
       /// Receive published data command event notify
       /// </summary>
       /// <remarks>Add delegate method to consume the received published data commands.

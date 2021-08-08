@@ -20,6 +20,7 @@ Filename: HartClient.cs
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.Diagnostics;
 using System.Text;
 using System.Threading;
 using System.Timers;
@@ -322,9 +323,17 @@ namespace FieldCommGroup.HartIPConnect
                     // Check if it has a connection
                     if ((m_HartIPConn != null) && m_HartIPConn.IsConnected)
                     {
+                        var maxPollAddress = 64;
+
+                        if (Debugger.IsAttached)
+                        {
+                            maxPollAddress = 1;
+                        }
+
+
                         // poll for the HART Device
                         HartDevice Dev = null;
-                        for (byte polladdr = 0; polladdr < 64; polladdr++)
+                        for (byte polladdr = 0; polladdr < maxPollAddress; polladdr++)
                         {
                             Dev = DiscoverHartDevice(polladdr);
                             if (Dev != null)
@@ -934,7 +943,13 @@ namespace FieldCommGroup.HartIPConnect
             // get check sum byte
             Params[4] = HartUtil.GetCheckSum(Params, 4);
 
-            Rsp = SendHartRequest(Params, 5, HARTIPConnect.IO_SOCKET_TIMEOUT);
+            var socketTimeOut = HARTIPConnect.IO_SOCKET_TIMEOUT;
+            if (Debugger.IsAttached)
+            {
+                socketTimeOut = HARTIPConnect.IO_SOCKET_TIMEOUT_DEBUGGER;
+            }
+
+            Rsp = SendHartRequest(Params, 5, socketTimeOut);
             if (Rsp != null)
             {
                 try

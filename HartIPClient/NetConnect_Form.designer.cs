@@ -1,33 +1,33 @@
 ﻿namespace FieldCommGroup.HartIPClient
 {
-  partial class NetConnect_Form
-  {
-    /// <summary>
-    /// Required designer variable.
-    /// </summary>
-    private System.ComponentModel.IContainer components = null;
-
-    /// <summary>
-    /// Clean up any resources being used.
-    /// </summary>
-    /// <param name="disposing">true if managed resources should be disposed; otherwise, false.</param>
-    protected override void Dispose(bool disposing)
+    partial class NetConnect_Form
     {
-      if (disposing && (components != null))
-      {
-        components.Dispose();
-      }
-      base.Dispose(disposing);
-    }
+        /// <summary>
+        /// Required designer variable.
+        /// </summary>
+        private System.ComponentModel.IContainer components = null;
 
-    #region Windows Form Designer generated code
+        /// <summary>
+        /// Clean up any resources being used.
+        /// </summary>
+        /// <param name="disposing">true if managed resources should be disposed; otherwise, false.</param>
+        protected override void Dispose(bool disposing)
+        {
+            if (disposing && (components != null))
+            {
+                components.Dispose();
+            }
+            base.Dispose(disposing);
+        }
 
-    /// <summary>
-    /// Required method for Designer support - do not modify
-    /// the contents of this method with the code editor.
-    /// </summary>
-    private void InitializeComponent()
-    {
+        #region Windows Form Designer generated code
+
+        /// <summary>
+        /// Required method for Designer support - do not modify
+        /// the contents of this method with the code editor.
+        /// </summary>
+        private void InitializeComponent()
+        {
             this.label1 = new System.Windows.Forms.Label();
             this.IPAdd_tb = new System.Windows.Forms.TextBox();
             this.label2 = new System.Windows.Forms.Label();
@@ -44,6 +44,8 @@
             this.groupBox2 = new System.Windows.Forms.GroupBox();
             this.SocketTimeout_tb = new System.Windows.Forms.TextBox();
             this.label5 = new System.Windows.Forms.Label();
+            this.cmdProcomsolServer = new System.Windows.Forms.Button();
+            this.cmdLocalServer = new System.Windows.Forms.Button();
             this.groupBox1.SuspendLayout();
             this.groupBox2.SuspendLayout();
             this.SuspendLayout();
@@ -65,6 +67,7 @@
             this.IPAdd_tb.ScrollBars = System.Windows.Forms.ScrollBars.Horizontal;
             this.IPAdd_tb.Size = new System.Drawing.Size(217, 20);
             this.IPAdd_tb.TabIndex = 0;
+            this.IPAdd_tb.Text = "10.1.3.39";
             // 
             // label2
             // 
@@ -108,7 +111,7 @@
             // 
             // OK_btn
             // 
-            this.OK_btn.Location = new System.Drawing.Point(156, 168);
+            this.OK_btn.Location = new System.Drawing.Point(155, 200);
             this.OK_btn.Name = "OK_btn";
             this.OK_btn.Size = new System.Drawing.Size(75, 23);
             this.OK_btn.TabIndex = 5;
@@ -119,7 +122,7 @@
             // Cancel_btn
             // 
             this.Cancel_btn.DialogResult = System.Windows.Forms.DialogResult.Cancel;
-            this.Cancel_btn.Location = new System.Drawing.Point(275, 168);
+            this.Cancel_btn.Location = new System.Drawing.Point(274, 200);
             this.Cancel_btn.Name = "Cancel_btn";
             this.Cancel_btn.Size = new System.Drawing.Size(75, 23);
             this.Cancel_btn.TabIndex = 6;
@@ -164,7 +167,7 @@
             this.groupBox1.Controls.Add(this.DrRetries_tb);
             this.groupBox1.Controls.Add(this.DrDelayBase_tb);
             this.groupBox1.Controls.Add(this.label4);
-            this.groupBox1.Location = new System.Drawing.Point(10, 104);
+            this.groupBox1.Location = new System.Drawing.Point(9, 136);
             this.groupBox1.Name = "groupBox1";
             this.groupBox1.Size = new System.Drawing.Size(485, 58);
             this.groupBox1.TabIndex = 4;
@@ -177,7 +180,7 @@
             this.groupBox2.Controls.Add(this.label5);
             this.groupBox2.Controls.Add(this.Udp_RBtn);
             this.groupBox2.Controls.Add(this.Tcp_RBtn);
-            this.groupBox2.Location = new System.Drawing.Point(11, 43);
+            this.groupBox2.Location = new System.Drawing.Point(10, 75);
             this.groupBox2.Name = "groupBox2";
             this.groupBox2.Size = new System.Drawing.Size(484, 48);
             this.groupBox2.TabIndex = 3;
@@ -201,11 +204,33 @@
             this.label5.TabIndex = 3;
             this.label5.Text = "Socket Timeout (seconds):";
             // 
+            // cmdProcomsolServer
+            // 
+            this.cmdProcomsolServer.Location = new System.Drawing.Point(9, 44);
+            this.cmdProcomsolServer.Name = "cmdProcomsolServer";
+            this.cmdProcomsolServer.Size = new System.Drawing.Size(85, 25);
+            this.cmdProcomsolServer.TabIndex = 7;
+            this.cmdProcomsolServer.Text = "Internet";
+            this.cmdProcomsolServer.UseVisualStyleBackColor = true;
+            this.cmdProcomsolServer.Click += new System.EventHandler(this.cmdProcomsolServer_Click);
+            // 
+            // cmdLocalServer
+            // 
+            this.cmdLocalServer.Location = new System.Drawing.Point(100, 44);
+            this.cmdLocalServer.Name = "cmdLocalServer";
+            this.cmdLocalServer.Size = new System.Drawing.Size(85, 25);
+            this.cmdLocalServer.TabIndex = 7;
+            this.cmdLocalServer.Text = "Local";
+            this.cmdLocalServer.UseVisualStyleBackColor = true;
+            this.cmdLocalServer.Click += new System.EventHandler(this.cmdLocalServer_Click);
+            // 
             // NetConnect_Form
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(507, 205);
+            this.ClientSize = new System.Drawing.Size(515, 257);
+            this.Controls.Add(this.cmdLocalServer);
+            this.Controls.Add(this.cmdProcomsolServer);
             this.Controls.Add(this.groupBox2);
             this.Controls.Add(this.groupBox1);
             this.Controls.Add(this.Cancel_btn);
@@ -224,25 +249,27 @@
             this.ResumeLayout(false);
             this.PerformLayout();
 
-    }
+        }
 
-    #endregion
+        #endregion
 
-    private System.Windows.Forms.Label label1;
-    private System.Windows.Forms.TextBox IPAdd_tb;
-    private System.Windows.Forms.Label label2;
-    private System.Windows.Forms.TextBox Port_tb;
-    private System.Windows.Forms.RadioButton Tcp_RBtn;
-    private System.Windows.Forms.RadioButton Udp_RBtn;
-    private System.Windows.Forms.Button OK_btn;
-    private System.Windows.Forms.Button Cancel_btn;
-    private System.Windows.Forms.Label label3;
-    private System.Windows.Forms.TextBox DrDelayBase_tb;
-    private System.Windows.Forms.Label label4;
-    private System.Windows.Forms.TextBox DrRetries_tb;
-	private System.Windows.Forms.GroupBox groupBox1;
-    private System.Windows.Forms.GroupBox groupBox2;
-    private System.Windows.Forms.TextBox SocketTimeout_tb;
-    private System.Windows.Forms.Label label5;
+        private System.Windows.Forms.Label label1;
+        private System.Windows.Forms.TextBox IPAdd_tb;
+        private System.Windows.Forms.Label label2;
+        private System.Windows.Forms.TextBox Port_tb;
+        private System.Windows.Forms.RadioButton Tcp_RBtn;
+        private System.Windows.Forms.RadioButton Udp_RBtn;
+        private System.Windows.Forms.Button OK_btn;
+        private System.Windows.Forms.Button Cancel_btn;
+        private System.Windows.Forms.Label label3;
+        private System.Windows.Forms.TextBox DrDelayBase_tb;
+        private System.Windows.Forms.Label label4;
+        private System.Windows.Forms.TextBox DrRetries_tb;
+        private System.Windows.Forms.GroupBox groupBox1;
+        private System.Windows.Forms.GroupBox groupBox2;
+        private System.Windows.Forms.TextBox SocketTimeout_tb;
+        private System.Windows.Forms.Label label5;
+        private System.Windows.Forms.Button cmdProcomsolServer;
+        private System.Windows.Forms.Button cmdLocalServer;
     }
 }

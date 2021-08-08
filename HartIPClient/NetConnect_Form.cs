@@ -223,5 +223,16 @@ namespace FieldCommGroup.HartIPClient
         {
 
         }
+
+
+        private void cmdProcomsolServer_Click(object sender, EventArgs e)
+        {
+            IPAdd_tb.Text = "174.77.73.234";
+        }
+
+        private void cmdLocalServer_Click(object sender, EventArgs e)
+        {
+            IPAdd_tb.Text = "10.1.3.39";
+        }
     }
 }
