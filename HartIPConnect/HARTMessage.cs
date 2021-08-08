@@ -497,107 +497,113 @@ namespace FieldCommGroup.HartIPConnect
     }
   }
 
-  /// <summary>
-  /// HartIPRequest class contains Hart request properties
-  /// and methods
-  /// </summary>
-  public class HartIPRequest : HartIPCommon
-  {
     /// <summary>
-    /// HART Request
+    /// HartIPRequest class contains Hart request properties
+    /// and methods
     /// </summary>
-    /// <param name="MsgId">MessageId message id</param>
-    /// <param name="TransactionId">ushort transaction id</param>
-      internal HartIPRequest(MessageId MsgId, ushort TransactionId)
-      : base(TransactionId, "Tx")
+    public class HartIPRequest : HartIPCommon
     {
-      MsgHeader = new HartIPMessageHeader(HARTIPMessage.HART_STX, MsgId, 0);           
-    } 
+        /// <summary>
+        /// HART Request
+        /// </summary>
+        /// <param name="MsgId">MessageId message id</param>
+        /// <param name="TransactionId">ushort transaction id</param>
+        internal HartIPRequest(MessageId MsgId, ushort TransactionId)
+            : base(TransactionId, "Tx")
+        {
+            MsgHeader = new HartIPMessageHeader(HARTIPMessage.HART_STX, MsgId, 0);
+        }
 
-    /// <summary>
-    /// Initiate a HART Session request
-    /// </summary>
-    /// <param name="usTranId">ushort Transaction Id</param>
-    /// <param name="InactivityCloseTime">uint Session inactivity close time</param>   
-    /// <returns><see cref="HartIPRequest"> initiate session request</see></returns>
-      public static HartIPRequest InitiateSession(ushort usTranId, uint InactivityCloseTime)
-    {
-      // create message header for this request
-      HartIPRequest request = new HartIPRequest(MessageId.SESSION_INITIATE, usTranId);
+        /// <summary>
+        /// Initiate a HART Session request
+        /// </summary>
+        /// <param name="usTranId">ushort Transaction Id</param>
+        /// <param name="InactivityCloseTime">uint Session inactivity close time</param>   
+        /// <returns><see cref="HartIPRequest"> initiate session request</see></returns>
+        public static HartIPRequest InitiateSession(ushort usTranId, uint InactivityCloseTime)
+        {
+            // create message header for this request
+            HartIPRequest request = new HartIPRequest(MessageId.SESSION_INITIATE, usTranId);
 
-      byte[] Params = new byte[5];
-      Params[0] = HARTIPMessage.HART_SESSION_MASTER_TYPE;
-      // swap the InactivityCloseTime bytes to 'host to network order'
-      Params[1] = (byte)((InactivityCloseTime >> 24) & 0x0ff);
-      Params[2] = (byte)((InactivityCloseTime >> 16) & 0x0ff);
-      Params[3] = (byte)((InactivityCloseTime >> 8) & 0x0ff);
-      Params[4] = (byte)(InactivityCloseTime & 0x0ff);
+            byte[] Params = new byte[5];
+            Params[0] = HARTIPMessage.HART_SESSION_MASTER_TYPE;
+            // swap the InactivityCloseTime bytes to 'host to network order'
+            Params[1] = (byte) ((InactivityCloseTime >> 24) & 0x0ff);
+            Params[2] = (byte) ((InactivityCloseTime >> 16) & 0x0ff);
+            Params[3] = (byte) ((InactivityCloseTime >> 8) & 0x0ff);
+            Params[4] = (byte) (InactivityCloseTime & 0x0ff);
 
-      // set it into request member variable
-      request.HARTCommand = Params;
-      // set the request's byte count
-      request.m_HartCmdSize = 5;
+            // set it into request member variable
+            request.HARTCommand = Params;
+            // set the request's byte count
+            request.m_HartCmdSize = 5;
 
-      return request;
-    }
+            return request;
+        }
 
-    /// <summary>
-    /// Close Session Request
-    /// </summary>
-    /// <param name="usTranId">ushort Transaction Id</param>
-    /// <returns><see cref="HartIPRequest">HartIPRequest close session request</see></returns>
-    public static HartIPRequest CloseSession(ushort usTranId)
-    {
-      HartIPRequest HRequest = new HartIPRequest(MessageId.SESSION_CLOSE, usTranId);     
-      return HRequest;
-    }
+        /// <summary>
+        /// Close Session Request
+        /// </summary>
+        /// <param name="usTranId">ushort Transaction Id</param>
+        /// <returns><see cref="HartIPRequest">HartIPRequest close session request</see></returns>
+        public static HartIPRequest CloseSession(ushort usTranId)
+        {
+            HartIPRequest HRequest = new HartIPRequest(MessageId.SESSION_CLOSE, usTranId);
+            return HRequest;
+        }
 
-    /// <summary>
-    /// Keep Alive Request
-    /// </summary>
-    /// <param name="usTranId">ushort Transaction Id</param>
-    /// <returns><see cref="HartIPRequest"> keep alive request</see></returns>
-    public static HartIPRequest KeepAlive(ushort usTranId)
-    {
-      HartIPRequest Request = new HartIPRequest(MessageId.KEEP_ALIVE, usTranId);     
-      return Request;
-    }
+        /// <summary>
+        /// Keep Alive Request
+        /// </summary>
+        /// <param name="usTranId">ushort Transaction Id</param>
+        /// <returns><see cref="HartIPRequest"> keep alive request</see></returns>
+        public static HartIPRequest KeepAlive(ushort usTranId)
+        {
+            HartIPRequest Request = new HartIPRequest(MessageId.KEEP_ALIVE, usTranId);
+            return Request;
+        }
 
-    /// <summary>
-    /// Create a HART Command Request
-    /// </summary>
-    /// <param name="usTranId">ushort Transaction Id</param>
-    /// <param name="Command">byte[] Command byte array    
-    /// <para>Array should have frame, device address, command, byte count, 
-    /// data, and checksum bytes.</para>
-    /// <para>device address is the device type and device id 5 bytes with expanded type mask</para>
-    /// <remarks>See HART specification 081r8.2.pdf section 5.1, 5.2, and 5.3 for frame, 
-    /// address, expansion, data, and checksum bytes information.
-    /// </remarks>
-    /// </param>
-    /// <param name="usByteCount">ushort the specified Command array byte count</param>   
-    /// <returns><see cref="HartIPRequest"> request</see></returns>
-    public static HartIPRequest HartCommandRequest(ushort usTranId, byte[] Command, 
-                                                 ushort usByteCount, int Timeout = HARTIPConnect.USE_SOCKET_TIMEOUT_DEFAULT)
-    {
-      if(usByteCount > HARTIPMessage.MAX_REQUEST_MSG_LEN)
-        throw new ArgumentException(String.Format("HartCommandRequest Error: Invalid cmd length: {0}.",
-            usByteCount));
+        /// <summary>
+        /// Create a HART Command Request
+        /// </summary>
+        /// <param name="usTranId">ushort Transaction Id</param>
+        /// <param name="Command">byte[] Command byte array    
+        /// <para>Array should have frame, device address, command, byte count, 
+        /// data, and checksum bytes.</para>
+        /// <para>device address is the device type and device id 5 bytes with expanded type mask</para>
+        /// <remarks>See HART specification 081r8.2.pdf section 5.1, 5.2, and 5.3 for frame, 
+        /// address, expansion, data, and checksum bytes information.
+        /// </remarks>
+        /// </param>
+        /// <param name="usByteCount">ushort the specified Command array byte count</param>   
+        /// <returns><see cref="HartIPRequest"> request</see></returns>
+        public static HartIPRequest HartCommandRequest(ushort usTranId, byte[] Command,
+            ushort usByteCount, int Timeout)
+        {
+            if (usByteCount > HARTIPMessage.MAX_REQUEST_MSG_LEN)
+                throw new ArgumentException(String.Format("HartCommandRequest Error: Invalid cmd length: {0}.",
+                    usByteCount));
 
-      HartIPRequest Request = new HartIPRequest(MessageId.HART_WIRED_PDU, usTranId);
+            HartIPRequest Request = new HartIPRequest(MessageId.HART_WIRED_PDU, usTranId);
 
-      Request.m_Timeout = Timeout;
+            Request.m_Timeout = Timeout;
 
-      // if command has data
-      if (usByteCount > 0)
-      {
-        Request.m_HartCmdSize = usByteCount;
-        Request.HARTCommand = Command;               
-      }
+            // if command has data
+            if (usByteCount > 0)
+            {
+                Request.m_HartCmdSize = usByteCount;
+                Request.HARTCommand = Command;
+            }
 
-      return Request;
-    }
-  }
+            return Request;
+        }
+
+        public static HartIPRequest HartCommandRequest(ushort usTranId, byte[] Command,ushort usByteCount)
+        {
+            var temp = HartCommandRequest(usTranId, Command, usByteCount, HARTIPConnect.USE_SOCKET_TIMEOUT_DEFAULT);
+            return temp;
+        }
+}
 
   /// <summary>
   /// HartIPResponse class contains Hart response properties
