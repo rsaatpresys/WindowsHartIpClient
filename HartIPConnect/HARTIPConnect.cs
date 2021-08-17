@@ -121,7 +121,7 @@ namespace FieldCommGroup.HartIPConnect
       /// <summary>
       /// IO Socket timeout used for the IO device that is connected via IP
       /// </summary>
-      public const int IO_SOCKET_TIMEOUT = 32;  // ms
+      public const int IO_SOCKET_TIMEOUT = 5000;  // ms
 
       /// <summary>
       /// IO Socket timeout used for the IO device that is connected via IP while runnig debugging to use breakpoints 
