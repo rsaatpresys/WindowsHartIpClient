@@ -67,7 +67,7 @@
             this.IPAdd_tb.ScrollBars = System.Windows.Forms.ScrollBars.Horizontal;
             this.IPAdd_tb.Size = new System.Drawing.Size(217, 20);
             this.IPAdd_tb.TabIndex = 0;
-            this.IPAdd_tb.Text = "10.1.3.39";
+            this.IPAdd_tb.Text = "192.168.137.5";
             // 
             // label2
             // 
